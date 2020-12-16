@@ -1,0 +1,5 @@
+App\Entity\Rating:
+    normalization_context:
+        groups: ['grade:read']
+    denormalization_context:
+        groups: ['grade:write']

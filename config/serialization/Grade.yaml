@@ -1,0 +1,10 @@
+App\Entity\Grade:
+    attributes:
+        id:
+            groups: ['grade:read']
+        value:
+            groups: ['grade:read', 'grade:write']
+        subject:
+            groups: ['grade:read', 'grade:write']
+        createdAt:
+            groups: ['grade:read']

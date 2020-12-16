@@ -1,0 +1,14 @@
+App\Entity\Student:
+    attributes:
+        id:
+            groups: ['student:read']
+        firstName:
+            groups: ['student:read', 'student:write']
+        lastName:
+            groups: ['student:read', 'student:write']
+        birthday:
+            groups: ['student:read', 'student:write']
+        grades:
+            groups: ['student:read']
+        createdAt:
+            groups: ['student:read']
