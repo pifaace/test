@@ -7,7 +7,7 @@ test: cs phpunit
 
 .PHONY: phpunit
 phpunit: bin
-	$(DOCKER_COMPOSE) php bin/phpunit --stop-on-error --stop-on-failure --testdox
+	$(DOCKER_COMPOSE) ./vendor/bin/simple-phpunit --stop-on-error --stop-on-failure --testdox
 
 # Coding Style
 .PHONY: cs cs-fix
