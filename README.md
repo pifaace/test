@@ -17,6 +17,7 @@ $ docker-compose up -d
 ```
 
 ### Migrations
+If you get a "Connection refused" wait a few seconds and try again
 ```
 $ docker-compose exec php bin/console doctrine:migrations:migrate
 $ docker-compose exec php bin/console hautelook:fixtures:load
