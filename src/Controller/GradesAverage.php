@@ -26,7 +26,7 @@ class GradesAverage
         }
 
         return new JsonResponse([
-            'average' => $average !== null ? (string) $average : 'No grade'
+            'average' => null !== $average ? (string) $average : 'No grade',
         ]);
     }
 }

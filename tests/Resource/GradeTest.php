@@ -19,7 +19,7 @@ class GradeTest extends ApiTestCase
         $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'subject' => 'english',
@@ -33,8 +33,8 @@ class GradeTest extends ApiTestCase
                 [
                     'propertyPath' => 'value',
                     'message' => 'This value should not be blank.',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -47,7 +47,7 @@ class GradeTest extends ApiTestCase
         $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'value' => -1,
@@ -62,8 +62,8 @@ class GradeTest extends ApiTestCase
                 [
                     'propertyPath' => 'value',
                     'message' => 'The rating must be between 0 and 20',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -76,7 +76,7 @@ class GradeTest extends ApiTestCase
         $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'value' => 25,
@@ -91,8 +91,8 @@ class GradeTest extends ApiTestCase
                 [
                     'propertyPath' => 'value',
                     'message' => 'The rating must be between 0 and 20',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -105,7 +105,7 @@ class GradeTest extends ApiTestCase
         $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'value' => 14,
@@ -119,8 +119,8 @@ class GradeTest extends ApiTestCase
                 [
                     'propertyPath' => 'subject',
                     'message' => 'This value should not be blank.',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -130,7 +130,7 @@ class GradeTest extends ApiTestCase
         $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'value' => 14,
@@ -144,8 +144,8 @@ class GradeTest extends ApiTestCase
                 [
                     'propertyPath' => 'student',
                     'message' => 'This value should not be blank.',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -158,7 +158,7 @@ class GradeTest extends ApiTestCase
         $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'value' => 14,
@@ -180,7 +180,7 @@ class GradeTest extends ApiTestCase
         $client = self::createClient();
         $client->request('GET', '/api/grades/average', [
             'headers' => [
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
         ]);
 

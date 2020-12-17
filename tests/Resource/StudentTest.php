@@ -15,7 +15,7 @@ class StudentTest extends ApiTestCase
         static::createClient()->request('POST', '/api/students', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'lastName' => 'Bon',
@@ -29,8 +29,8 @@ class StudentTest extends ApiTestCase
                 [
                     'propertyPath' => 'firstName',
                     'message' => 'This value should not be blank.',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -39,7 +39,7 @@ class StudentTest extends ApiTestCase
         static::createClient()->request('POST', '/api/students', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'firstName' => 'Jean',
@@ -53,8 +53,8 @@ class StudentTest extends ApiTestCase
                 [
                     'propertyPath' => 'lastName',
                     'message' => 'This value should not be blank.',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -63,7 +63,7 @@ class StudentTest extends ApiTestCase
         static::createClient()->request('POST', '/api/students', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'firstName' => 'Jean',
@@ -77,8 +77,8 @@ class StudentTest extends ApiTestCase
                 [
                     'propertyPath' => 'birthday',
                     'message' => 'This value should not be blank.',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -87,7 +87,7 @@ class StudentTest extends ApiTestCase
         static::createClient()->request('POST', '/api/students', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'firstName' => 'Jean',
@@ -100,7 +100,7 @@ class StudentTest extends ApiTestCase
         $this->assertJsonContains([
             'firstName' => 'Jean',
             'lastName' => 'Bon',
-            'birthday' => '2010-01-15T00:00:00+01:00'
+            'birthday' => '2010-01-15T00:00:00+01:00',
         ]);
     }
 
@@ -113,7 +113,7 @@ class StudentTest extends ApiTestCase
         $client->request('PUT', "/api/students/{$student->getId()}", [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
             'json' => [
                 'lastName' => 'Bonbon',
@@ -137,7 +137,7 @@ class StudentTest extends ApiTestCase
         $client->request('DELETE', '/api/students/'.$student->getId(), [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'accept' => 'application/json'
+                'accept' => 'application/json',
             ],
         ]);
 
@@ -153,8 +153,8 @@ class StudentTest extends ApiTestCase
 
         $client->request('GET', "/api/students/{$student->getId()}/average", [
             'headers' => [
-                'accept' => 'application/json'
-            ]
+                'accept' => 'application/json',
+            ],
         ]);
 
         $this->assertResponseStatusCodeSame(200);
@@ -172,8 +172,8 @@ class StudentTest extends ApiTestCase
 
         $client->request('GET', "/api/students/{$student->getId()}/average", [
             'headers' => [
-                'accept' => 'application/json'
-            ]
+                'accept' => 'application/json',
+            ],
         ]);
 
         $this->assertResponseStatusCodeSame(200);
