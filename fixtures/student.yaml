@@ -3,4 +3,15 @@ App\Entity\Student:
         firstName: 'michel'
         lastName: 'blanc'
         birthday: '<(new DateTime("2010-02-13"))>'
-        grades: ['@maths_grade']
+        grades: ['@maths_grade', '@english_grade', '@french_grade']
+
+    alex_grand:
+        firstName: 'alex'
+        lastName: 'grand'
+        birthday: '<(new DateTime("2011-02-13"))>'
+
+    alex_petit:
+        firstName: 'alex'
+        lastName: 'petit'
+        birthday: '<(new DateTime("2011-02-13"))>'
+        grades: ['@info_grade']

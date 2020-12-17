@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\RatingRepository;
+use App\Repository\GradeRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=RatingRepository::class)
+ * @ORM\Entity(repositoryClass=GradeRepository::class)
  */
 class Grade
 {

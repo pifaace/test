@@ -4,3 +4,17 @@ App\Entity\Student:
           groups: ['student:read']
       denormalization_context:
           groups: ['student:write']
+
+  itemOperations:
+      get: ~
+      put: ~
+      delete: ~
+      average:
+          method: GET
+          path: /students/{id}/average
+          controller: App\Controller\StudentAverage
+          openapi_context:
+              summary: Get the student's average
+              parameters:
+                - in: path
+                  name: id

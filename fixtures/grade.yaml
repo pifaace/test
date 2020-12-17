@@ -2,3 +2,12 @@ App\Entity\Grade:
     maths_grade:
         value: 5
         subject: 'maths'
+    english_grade:
+        value: 15
+        subject: 'english'
+    french_grade:
+        value: 19
+        subject: 'french'
+    info_grade:
+        value: 12
+        subject: 'info'

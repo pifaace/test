@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Tests\Resource;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
@@ -112,7 +110,7 @@ class StudentTest extends ApiTestCase
         $em = self::$kernel->getContainer()->get('doctrine')->getManager();
         $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
         assert($student instanceof Student);
-        $client->request('PUT', '/api/students/'.$student->getId(), [
+        $client->request('PUT', "/api/students/{$student->getId()}", [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'accept' => 'application/json'
@@ -146,4 +144,41 @@ class StudentTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(204);
     }
 
+    public function testGetStudentAverage()
+    {
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
+        assert($student instanceof Student);
+
+        $client->request('GET', "/api/students/{$student->getId()}/average", [
+            'headers' => [
+                'accept' => 'application/json'
+            ]
+        ]);
+
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertJsonContains([
+            'average' => '13',
+        ]);
+    }
+
+    public function testGetStudentAverageWithNoGrades()
+    {
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('grand');
+        assert($student instanceof Student);
+
+        $client->request('GET', "/api/students/{$student->getId()}/average", [
+            'headers' => [
+                'accept' => 'application/json'
+            ]
+        ]);
+
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertJsonContains([
+            'average' => 'No grade',
+        ]);
+    }
 }

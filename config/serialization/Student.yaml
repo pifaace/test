@@ -13,4 +13,4 @@ App\Entity\Student:
         createdAt:
             groups: ['student:read']
         updatedAt:
-          groups: ['student:read']
+            groups: ['student:read']

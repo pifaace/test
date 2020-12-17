@@ -1,6 +1,15 @@
 App\Entity\Grade:
-  attributes:
-      normalization_context:
-          groups: ['grade:read']
-      denormalization_context:
-          groups: ['grade:write']
+    attributes:
+        normalization_context:
+            groups: ['grade:read']
+        denormalization_context:
+            groups: ['grade:write']
+    collectionOperations:
+        get: ~
+        post: ~
+        average:
+            method: GET
+            path: /grades/average
+            controller: App\Controller\GradesAverage
+            openapi_context:
+                summary: Get the global average

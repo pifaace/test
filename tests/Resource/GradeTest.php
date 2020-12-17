@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Tests\Resource;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
@@ -12,16 +10,20 @@ class GradeTest extends ApiTestCase
 {
     use RefreshDatabaseTrait;
 
-    public function testCreateStudentFirstNameIsMissing()
+    public function testCreateGradeValueIsMissing()
     {
-        static::createClient()->request('POST', '/api/students', [
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
+        assert($student instanceof Student);
+        $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'accept' => 'application/json'
             ],
             'json' => [
-                'lastName' => 'Bon',
-                'birthday' => '2010-01-15',
+                'subject' => 'english',
+                'student' => "/api/students/{$student->getId()}",
             ],
         ]);
 
@@ -29,23 +31,28 @@ class GradeTest extends ApiTestCase
         $this->assertJsonContains([
             'violations' => [
                 [
-                    'propertyPath' => 'firstName',
+                    'propertyPath' => 'value',
                     'message' => 'This value should not be blank.',
                 ]
             ]
         ]);
     }
 
-    public function testCreateStudentLastNameIsMissing()
+    public function testCreateGradeValueIsLessThanZero()
     {
-        static::createClient()->request('POST', '/api/students', [
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
+        assert($student instanceof Student);
+        $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'accept' => 'application/json'
             ],
             'json' => [
-                'firstName' => 'Jean',
-                'birthday' => '2010-01-15',
+                'value' => -1,
+                'subject' => 'english',
+                'student' => "/api/students/{$student->getId()}",
             ],
         ]);
 
@@ -53,23 +60,28 @@ class GradeTest extends ApiTestCase
         $this->assertJsonContains([
             'violations' => [
                 [
-                    'propertyPath' => 'lastName',
-                    'message' => 'This value should not be blank.',
+                    'propertyPath' => 'value',
+                    'message' => 'The rating must be between 0 and 20',
                 ]
             ]
         ]);
     }
 
-    public function testCreateStudentBirthdayIsMissing()
+    public function testCreateGradeValueIsMoreThanTwenty()
     {
-        static::createClient()->request('POST', '/api/students', [
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
+        assert($student instanceof Student);
+        $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'accept' => 'application/json'
             ],
             'json' => [
-                'firstName' => 'Jean',
-                'lastName' => 'Bon',
+                'value' => 25,
+                'subject' => 'english',
+                'student' => "/api/students/{$student->getId()}",
             ],
         ]);
 
@@ -77,73 +89,104 @@ class GradeTest extends ApiTestCase
         $this->assertJsonContains([
             'violations' => [
                 [
-                    'propertyPath' => 'birthday',
+                    'propertyPath' => 'value',
+                    'message' => 'The rating must be between 0 and 20',
+                ]
+            ]
+        ]);
+    }
+
+    public function testCreateGradeSubjectIsMissing()
+    {
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
+        assert($student instanceof Student);
+        $client->request('POST', '/api/grades', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'accept' => 'application/json'
+            ],
+            'json' => [
+                'value' => 14,
+                'student' => "/api/students/{$student->getId()}",
+            ],
+        ]);
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonContains([
+            'violations' => [
+                [
+                    'propertyPath' => 'subject',
                     'message' => 'This value should not be blank.',
                 ]
             ]
         ]);
     }
 
-    public function testCreateStudentSuccessfully()
+    public function testCreateGradeStudentIsMissing()
     {
-        static::createClient()->request('POST', '/api/students', [
+        $client = self::createClient();
+        $client->request('POST', '/api/grades', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'accept' => 'application/json'
             ],
             'json' => [
-                'firstName' => 'Jean',
-                'lastName' => 'Bon',
-                'birthday' => '2010-01-15',
+                'value' => 14,
+                'subject' => 'english',
+            ],
+        ]);
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonContains([
+            'violations' => [
+                [
+                    'propertyPath' => 'student',
+                    'message' => 'This value should not be blank.',
+                ]
+            ]
+        ]);
+    }
+
+    public function testCreateGradeSuccessfully()
+    {
+        $client = self::createClient();
+        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
+        assert($student instanceof Student);
+        $client->request('POST', '/api/grades', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'accept' => 'application/json'
+            ],
+            'json' => [
+                'value' => 14,
+                'subject' => 'english',
+                'student' => "/api/students/{$student->getId()}",
             ],
         ]);
 
         $this->assertResponseStatusCodeSame(201);
         $this->assertJsonContains([
-            'firstName' => 'Jean',
-            'lastName' => 'Bon',
-            'birthday' => '2010-01-15T00:00:00+01:00'
+            'value' => 14,
+            'subject' => 'english',
+            'student' => "/api/students/{$student->getId()}",
         ]);
     }
 
-    public function testEditStudent()
+    public function testGetGlobalAverage()
     {
         $client = self::createClient();
-        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
-        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
-        assert($student instanceof Student);
-        $client->request('PUT', '/api/students/'.$student->getId(), [
+        $client->request('GET', '/api/grades/average', [
             'headers' => [
-                'Content-Type' => 'application/json',
                 'accept' => 'application/json'
-            ],
-            'json' => [
-                'lastName' => 'Bonbon',
             ],
         ]);
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJsonContains([
-            'firstName' => 'michel',
-            'lastName' => 'Bonbon',
-            'birthday' => '2010-02-13T00:00:00+01:00',
+            'average' => '12.75',
         ]);
     }
-
-    public function testRemoveStudent()
-    {
-        $client = self::createClient();
-        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
-        $student = $em->getRepository(Student::class)->findOneByLastName('blanc');
-        assert($student instanceof Student);
-        $client->request('DELETE', '/api/students/'.$student->getId(), [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'accept' => 'application/json'
-            ],
-        ]);
-
-        $this->assertResponseStatusCodeSame(204);
-    }
-
 }
