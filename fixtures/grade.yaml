@@ -1,0 +1,4 @@
+App\Entity\Grade:
+    maths_grade:
+        value: 5
+        subject: 'maths'

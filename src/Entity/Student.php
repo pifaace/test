@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=StudentRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Student
 {
@@ -47,12 +48,11 @@ class Student
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Assert\Date
      */
     private DateTime $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Grade", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="App\Entity\Grade", mappedBy="student", cascade={"remove"})
      */
     private Collection $grades;
 
@@ -60,6 +60,7 @@ class Student
     {
         $this->id = Uuid::uuid4();
         $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTime();
         $this->grades = new ArrayCollection();
     }
 
@@ -137,8 +138,13 @@ class Student
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTime $updatedAt): void
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new DateTime();
+
+        return $this;
     }
 }

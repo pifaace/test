@@ -6,5 +6,7 @@ App\Entity\Grade:
             groups: ['grade:read', 'grade:write']
         subject:
             groups: ['grade:read', 'grade:write']
+        student:
+            groups: ['grade:read', 'grade:write']
         createdAt:
             groups: ['grade:read']

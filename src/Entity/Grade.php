@@ -38,6 +38,7 @@ class Grade
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="grades")
+     * @Assert\NotBlank
      */
     private Student $student;
 

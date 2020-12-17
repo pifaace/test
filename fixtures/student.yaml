@@ -1,0 +1,6 @@
+App\Entity\Student:
+    michel_blanc:
+        firstName: 'michel'
+        lastName: 'blanc'
+        birthday: '<(new DateTime("2010-02-13"))>'
+        grades: ['@maths_grade']

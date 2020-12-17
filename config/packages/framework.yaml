@@ -6,9 +6,10 @@ framework:
         cookie_secure: auto
         cookie_samesite: lax
 
-    serializer:
-        mapping:
-            paths: ['%kernel.project_dir%/config/serializer']
-
     php_errors:
         log: true
+
+    serializer:
+#        enable_annotations: false
+        mapping:
+            paths: ['%kernel.project_dir%/config/serialization/']

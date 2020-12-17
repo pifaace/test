@@ -1,5 +1,6 @@
-App\Entity\Rating:
-    normalization_context:
-        groups: ['student:read']
-    denormalization_context:
-        groups: ['student:write']
+App\Entity\Student:
+  attributes:
+      normalization_context:
+          groups: ['student:read']
+      denormalization_context:
+          groups: ['student:write']
