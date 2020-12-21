@@ -159,7 +159,10 @@ class StudentTest extends ApiTestCase
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJsonContains([
-            'average' => '13',
+            'global_average' => '12.7',
+            'english' => '8.5',
+            'french' => '19.0',
+            'maths' => '10.5',
         ]);
     }
 
@@ -178,7 +181,7 @@ class StudentTest extends ApiTestCase
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJsonContains([
-            'average' => 'No grade',
+            'global_average' => 'No grade',
         ]);
     }
 }

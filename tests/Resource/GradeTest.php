@@ -186,7 +186,7 @@ class GradeTest extends ApiTestCase
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJsonContains([
-            'average' => '12.75',
+            'average' => '11.50',
         ]);
     }
 }

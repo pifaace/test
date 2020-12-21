@@ -3,7 +3,7 @@ App\Entity\Student:
         firstName: 'michel'
         lastName: 'blanc'
         birthday: '<(new DateTime("2010-02-13"))>'
-        grades: ['@maths_grade', '@english_grade', '@french_grade']
+        grades: ['@maths_grade', '@english_grade', '@french_grade', '@english_2_grade', '@maths_grade_2']
 
     alex_grand:
         firstName: 'alex'

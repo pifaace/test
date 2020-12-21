@@ -16,17 +16,10 @@ class GradesAverage
 
     public function __invoke()
     {
-        $grades = $this->gradeRepository->findAll();
-        $average = null;
-        $sum = 0;
-
-        foreach ($grades as $grade) {
-            $sum += $grade->getValue();
-            $average = $sum / count($grades);
-        }
+        $grades = number_format($this->gradeRepository->getGradeAverage(), 2);
 
         return new JsonResponse([
-            'average' => null !== $average ? (string) $average : 'No grade',
+            'average' => '0.00' !== $grades ? $grades : 'No grade',
         ]);
     }
 }
